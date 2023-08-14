@@ -1,5 +1,6 @@
 export const  ROUTES_PATHS = {
     HOME: '/',
-    // COCKTAIL: '/cocktails/:rid',
-    // COCKTAIL_RANDOM: '/random',
+    BlockAdd: '/block-add',
+    BlockUpdate: '/block-update',
+    BlockDelete: '/block-delete'
 }

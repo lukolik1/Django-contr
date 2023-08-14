@@ -1,27 +1,32 @@
 <script setup>
-import Button from './Button.vue';
 import Image from './Image.vue';
+
 </script>
 
 
 <script>
 import axios from 'axios'
+import { DB_DJANGO } from '../env'
 
 export default {
   data () {
     return {
-        titls: []
+        titls: [],
+        errorMessage: null,
     }
   },
   mounted () {
-    axios.get('http://localhost:8000/titls/')
+    axios.get(DB_DJANGO.GET)
       .then(response => {
         this.titls = response.data;
         
       })
       .catch(error => {
-        console.log(error)
+        console.log(error);
+        this.errorMessage = "EROR 500";
       })
+
+      
   }
 }
 
@@ -33,66 +38,45 @@ export default {
 <style scoped>
 
 .Content {
-    display: flex;
-    flex-wrap: wrap;
-    top: 10px;
-    widows: 100%;
-    height: 100%;
-    
-    margin: 10px;
-    padding: 10px;
-
-    left: 900px;
-    right: 900px;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 10px;
+  padding: 10px;
 }
 
 .Card {
-    
-    justify-content: center;
-    text-align: center;
-    margin-left: 850px;
-    margin-top: 20px;
-
-    border: 30px;
-    box-shadow: 0 0 10px 5px rgb(38, 107, 172);
-    
+  justify-content: center;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  border: 30px;
+  box-shadow: 0 0 10px 5px rgb(38, 107, 172);
 }
 
 .h1 {
-    font-size: 40px;
-    text-align: center;
-    color: cadetblue;
-    
+  font-size: 40px;
+  text-align: center;
+  color: cadetblue;
 }
 
 .Card-mini {
-    width: 250px;
-    height: 250px;
-    margin: 20px;
-
-    border: 15px;
-    box-shadow: 0 0 10px 5px rgb(32, 117, 111);
-
+  width: 250px;
+  height: 250px;
+  margin: 20px;
+  border: 15px;
+  box-shadow: 0 0 10px 5px rgb(32, 117, 111);
 }
 
 p {
-    font-size: 15px;
-    font-family: cursive;
+  font-size: 15px;
+  font-family: cursive;
 }
 
-.Image {
-    display: flex;
-    position: fixed;
-    width: 600px;
-    height: 600px;
-
-    margin-top: -900px;
-   
-    
+.error-message {
+  color: red;
+  font-size: 40px;
 }
-
-
-
 
 
 
@@ -100,38 +84,17 @@ p {
 
 <template>
     <div class="main">
-        <div class="Content" v-for="t of titls" :key="t._id">
-            
-            
-            <div class="Card" id="app">
-                     <h1 class="h1">{{ t.title }}</h1>
-
-                <div class="Card-mini">
-                    <p> {{ t.content }} </p>
-                </div>
-            
-                <div class="button">
-                    <Button></Button>
-                </div>
-            </div>
-            
-            
-            
-
-
+    <div class="Content" v-for="t in titls" :key="t._id">
+      <div class="Card">
+        <h1 class="h1">{{ t.title }}</h1>
+        <div class="Card-mini">
+          <p>{{ t.content }}</p>
         </div>
-
-        <div class="Image">
-             <Image></Image>
+        <div class="button">
+          <Button></Button>
         </div>
-       
-            
-
-        
-
+      </div>
     </div>
-
-    
-
-
+    <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+  </div>
 </template>

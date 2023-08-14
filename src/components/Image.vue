@@ -16,13 +16,8 @@ export default {
 
 <style scoped>
 image {
-    
-
-
-    
-
-    width: 500px;
-    height: 500px;
+  width: 500px;
+  height: 500px;
 }
 </style>
 
